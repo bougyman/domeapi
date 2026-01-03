@@ -2,11 +2,17 @@
 
 require 'semantic_logger'
 require 'zeitwerk'
+require 'dry-configurable'
 require_relative 'domeapi/version'
 
 module Rubyists
   # Domeapi module
   module Domeapi
+    extend Dry::Configurable
+
+    setting :api_key
+    setting :base_url, default: 'https://api.domeapi.io/v1'
+
     include SemanticLogger::Loggable
 
     class Error < StandardError; end

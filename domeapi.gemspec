@@ -35,8 +35,10 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'dry-cli'
   spec.add_dependency 'dry-configurable'
   spec.add_dependency 'dry-container'
+  spec.add_dependency 'httpx'
   spec.add_dependency 'semantic_logger'
   spec.add_dependency 'trailblazer'
+  spec.add_dependency 'webmock'
   spec.add_dependency 'zeitwerk'
 
   # For more information and examples about making a new gem, check out our
