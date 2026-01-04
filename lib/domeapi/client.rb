@@ -10,15 +10,17 @@ module Rubyists
       include SemanticLogger::Loggable
 
       attr_reader :http, :base_url
+      attr_accessor :prefix
 
       def initialize(api_key: Domeapi.config.api_key, base_url: Domeapi.config.base_url)
         @base_url = base_url
         @http = HTTPX.plugin(:persistent)
+                     .plugin(:rate_limiter)
                      .with(origin: base_url, headers: { 'Authorization' => "Bearer #{api_key}" })
       end
 
       def get(path, params: {})
-        response = @http.get(path, params: params)
+        response = @http.get(full_url(path), params:)
         handle_response(response)
       end
 
@@ -27,6 +29,10 @@ module Rubyists
       end
 
       private
+
+      def full_url(path)
+        File.join(*[base_url, prefix, path].compact)
+      end
 
       def handle_response(response)
         response.raise_for_status

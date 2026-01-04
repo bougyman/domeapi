@@ -7,8 +7,13 @@ module Rubyists
       class Client
         attr_reader :client
 
-        def initialize(client)
+        def initialize(client = Rubyists::Domeapi::Client.new)
           @client = client
+          client.prefix = 'polymarket'
+        end
+
+        def get(...)
+          client.get(...)
         end
 
         def markets

@@ -24,7 +24,7 @@ module Rubyists
             limit:
           }.compact
 
-          client.get('/polymarket/orders/get_orders', params: params)
+          client.get('orders/get_orders', params: params)
         end
       end
     end

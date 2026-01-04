@@ -14,7 +14,7 @@ describe Rubyists::Domeapi::Client do
 
   describe 'Polymarket Orders' do
     it 'gets orders' do
-      stub_request(:get, 'https://api.domeapi.io/polymarket/orders/get_orders')
+      stub_request(:get, 'https://api.domeapi.io/v1/polymarket/orders/get_orders')
         .with(query: { market_slug: 'slug', limit: '10' })
         .to_return(status: 200, body: '[]')
 

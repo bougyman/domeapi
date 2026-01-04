@@ -14,10 +14,10 @@ module Rubyists
           end
         end
 
-        # @param client [Rubyists::Domeapi::Client]
+        # @param client [Rubyists::Domeapi::Polymarket::Client]
         #
         # @return [void]
-        def initialize(client = Rubyists::Domeapi.client)
+        def initialize(client = Rubyists::Domeapi::Polymarket::Client.new)
           @client = client
         end
 
@@ -28,7 +28,7 @@ module Rubyists
         def list(filter = MarketFilter.new(MarketFilter::Properties.new))
           raise ArgumentError, filter.errors.full_messages.join(', ') unless filter.validate({})
 
-          client.get('/polymarket/markets', params: filter.to_h)
+          client.get('markets', params: filter.to_h)
         end
 
         # Fetch current or historical price for a market
@@ -40,7 +40,7 @@ module Rubyists
         def price(token_id:, at_time: nil)
           params = { token_id: token_id }
           params[:at_time] = at_time if at_time
-          client.get('/polymarket/markets/get_market_price', params: params)
+          client.get('markets/get_market_price', params: params)
         end
 
         # Get OHLC candlesticks
@@ -58,7 +58,7 @@ module Rubyists
             end_time: end_time,
             interval: interval
           }
-          client.get('/polymarket/markets/get_candlesticks', params: params)
+          client.get('markets/get_candlesticks', params: params)
         end
       end
     end

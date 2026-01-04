@@ -20,7 +20,7 @@ describe Rubyists::Domeapi::Client do
     let(:markets) { client.polymarket.markets }
 
     it 'gets market price' do
-      stub_request(:get, 'https://api.domeapi.io/polymarket/markets/get_market_price')
+      stub_request(:get, 'https://api.domeapi.io/v1/polymarket/markets/get_market_price')
         .with(query: { token_id: '123' })
         .to_return(status: 200, body: '{"price": 0.5}')
 
@@ -30,7 +30,7 @@ describe Rubyists::Domeapi::Client do
     end
 
     it 'gets candlesticks' do
-      stub_request(:get, 'https://api.domeapi.io/polymarket/markets/get_candlesticks')
+      stub_request(:get, 'https://api.domeapi.io/v1/polymarket/markets/get_candlesticks')
         .with(query: { condition_id: 'abc', start_time: '100', end_time: '200', interval: '60' })
         .to_return(status: 200, body: '{"candlesticks": []}')
 
@@ -40,7 +40,7 @@ describe Rubyists::Domeapi::Client do
     end
 
     it 'lists markets' do
-      stub_request(:get, 'https://api.domeapi.io/polymarket/markets')
+      stub_request(:get, 'https://api.domeapi.io/v1/polymarket/markets')
         .with(query: { limit: '10', offset: '0' })
         .to_return(status: 200, body: '[{"id": "market1"}]')
 
@@ -53,7 +53,7 @@ describe Rubyists::Domeapi::Client do
     end
 
     it 'lists markets with default filter' do
-      stub_request(:get, 'https://api.domeapi.io/polymarket/markets')
+      stub_request(:get, 'https://api.domeapi.io/v1/polymarket/markets')
         .to_return(status: 200, body: '[{"id": "market1"}]')
 
       response = markets.list
