@@ -10,7 +10,7 @@ module Rubyists
   module Domeapi
     extend Dry::Configurable
 
-    setting :api_key
+    setting :api_key, default: ENV.fetch('DOMEAPI_API_KEY', nil)
     setting :base_url, default: 'https://api.domeapi.io/v1'
 
     include SemanticLogger::Loggable
@@ -19,6 +19,10 @@ module Rubyists
 
     # Operation submodule, for Trailblazer operations
     module Operation; end
+
+    def self.client
+      @client ||= Client.new
+    end
   end
 end
 

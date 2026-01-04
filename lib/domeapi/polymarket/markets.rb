@@ -10,8 +10,16 @@ module Rubyists
         # @param client [Rubyists::Domeapi::Client]
         #
         # @return [void]
-        def initialize(client)
+        def initialize(client = Rubyists::Domeapi.client)
           @client = client
+        end
+
+        # List markets
+        # @param filter [MarketFilter] Filter options
+        def list(filter = MarketFilter.new(MarketFilter::Model.new))
+          raise ArgumentError, filter.errors.full_messages.join(', ') unless filter.validate({})
+
+          client.get('/polymarket/markets', params: filter.to_h)
         end
 
         # Fetch current or historical price for a market
