@@ -38,5 +38,27 @@ describe Rubyists::Domeapi::Client do
 
       _(response).must_equal({ candlesticks: [] })
     end
+
+    it 'lists markets' do
+      stub_request(:get, 'https://api.domeapi.io/polymarket/markets')
+        .with(query: { limit: '10', offset: '0' })
+        .to_return(status: 200, body: '[{"id": "market1"}]')
+
+      filter = Rubyists::Domeapi::Polymarket::MarketFilter.new(
+        Rubyists::Domeapi::Polymarket::MarketFilter::Properties.new(limit: 10, offset: 0)
+      )
+      response = markets.list(filter)
+
+      _(response).must_equal([{ id: 'market1' }])
+    end
+
+    it 'lists markets with default filter' do
+      stub_request(:get, 'https://api.domeapi.io/polymarket/markets')
+        .to_return(status: 200, body: '[{"id": "market1"}]')
+
+      response = markets.list
+
+      _(response).must_equal([{ id: 'market1' }])
+    end
   end
 end

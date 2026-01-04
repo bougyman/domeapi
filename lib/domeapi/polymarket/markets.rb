@@ -25,7 +25,7 @@ module Rubyists
         # @param filter [MarketFilter] Filter options
         #
         # @return [Array<Polymarket::Market>] list of markets
-        def list(filter = MarketFilter.new(MarketFilter::Model.new))
+        def list(filter = MarketFilter.new(MarketFilter::Properties.new))
           raise ArgumentError, filter.errors.full_messages.join(', ') unless filter.validate({})
 
           client.get('/polymarket/markets', params: filter.to_h)

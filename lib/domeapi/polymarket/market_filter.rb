@@ -23,8 +23,8 @@ module Rubyists
 
         validation do
           params do
-            optional(:status).filled(:string, included_in?: %w[open closed])
-            optional(:offset).filled(:integer, gteq?: 0, lteq?: 100)
+            optional(:status).maybe(:string, included_in?: %w[open closed])
+            optional(:offset).maybe(:integer, gteq?: 0, lteq?: 100)
           end
         end
       end
