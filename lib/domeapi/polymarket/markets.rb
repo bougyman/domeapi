@@ -7,6 +7,13 @@ module Rubyists
       class Markets
         attr_reader :client
 
+        class << self
+          # @see #list
+          def list(...)
+            new.list(...)
+          end
+        end
+
         # @param client [Rubyists::Domeapi::Client]
         #
         # @return [void]
@@ -16,6 +23,8 @@ module Rubyists
 
         # List markets
         # @param filter [MarketFilter] Filter options
+        #
+        # @return [Array<Polymarket::Market>] list of markets
         def list(filter = MarketFilter.new(MarketFilter::Model.new))
           raise ArgumentError, filter.errors.full_messages.join(', ') unless filter.validate({})
 

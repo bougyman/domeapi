@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'minitest'
+gem 'ostruct'
 gem 'pry'
 gem 'rake'
 gem 'rubocop'

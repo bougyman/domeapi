@@ -5,25 +5,27 @@ module Rubyists
     module Polymarket
       # Filter for Polymarket markets
       class MarketFilter < Contract
-        property :market_slug
-        property :event_slug
-        property :condition_id
-        property :tags
-        property :status
-        property :min_volume
-        property :limit
-        property :offset
-        property :start_time
-        property :end_time
+        Properties = Struct.new(
+          :market_slug,
+          :event_slug,
+          :condition_id,
+          :tags,
+          :status,
+          :min_volume,
+          :limit,
+          :offset,
+          :start_time,
+          :end_time,
+          keyword_init: true
+        )
+
+        Properties.members.each { |member| property member, populator: ->(model:, **) { model || skip! } }
 
         validation do
           params do
             optional(:status).filled(:string, included_in?: %w[open closed])
+            optional(:offset).filled(:integer, gteq?: 0, lteq?: 100)
           end
-        end
-
-        def to_h
-          to_nested_hash.compact
         end
       end
     end
